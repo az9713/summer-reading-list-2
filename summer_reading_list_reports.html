@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>a16z New Media 2026 Summer Reading Reports</title>
+  <style>
+    :root {
+      --ink: #201f1b;
+      --muted: #6b665c;
+      --paper: #fffdf7;
+      --paper-2: #f7f1e5;
+      --paper-3: #eadfcd;
+      --line: #c7b99f;
+      --line-dark: #8f7b57;
+      --rust: #8d3d27;
+      --teal: #1f6265;
+      --shadow: rgba(68, 48, 25, 0.22);
+      --glow: rgba(255, 255, 255, 0.72);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 8%, rgba(255,255,255,0.72), transparent 28%),
+        linear-gradient(145deg, #eee3d0 0%, #f8f3e9 42%, #e8dcc7 100%);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.58;
+    }
+    .shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+    header {
+      padding: 28px 30px 24px;
+      border: 1px solid rgba(143, 123, 87, 0.42);
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(180deg, #fffaf0 0%, #efe2cd 100%);
+      box-shadow: 0 18px 40px var(--shadow), inset 0 1px 0 var(--glow);
+    }
+    h1 {
+      margin: 0;
+      max-width: 920px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+    header p {
+      margin: 14px 0 0;
+      max-width: 820px;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+    }
+    .tab-deck {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 7px;
+      padding: 14px 14px 0;
+      border-right: 1px solid rgba(143, 123, 87, 0.42);
+      border-left: 1px solid rgba(143, 123, 87, 0.42);
+      background: linear-gradient(180deg, #d8c7aa 0%, #c7b290 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 12px 22px rgba(65, 45, 25, 0.18);
+    }
+    .tab {
+      position: relative;
+      min-height: 48px;
+      padding: 10px 15px 12px;
+      border: 1px solid #9e8964;
+      border-bottom-color: #78633f;
+      border-radius: 8px 8px 0 0;
+      color: #33291b;
+      background: linear-gradient(180deg, #fbf5e8 0%, #dcc9a9 56%, #bda47a 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -2px 0 rgba(96,70,36,0.18), 0 5px 0 #8b734b, 0 9px 16px rgba(60,42,24,0.22);
+      font: 700 13px/1.15 Arial, Helvetica, sans-serif;
+      text-align: left;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+    .tab:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -2px 0 rgba(96,70,36,0.13), 0 7px 0 #8b734b, 0 13px 18px rgba(60,42,24,0.24);
+    }
+    .tab.active {
+      color: #fffdf8;
+      border-color: #6f2f20;
+      background: linear-gradient(180deg, #b75a39 0%, #8d3d27 52%, #6f2f20 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), inset 0 -2px 0 rgba(0,0,0,0.22), 0 4px 0 #552316, 0 10px 18px rgba(70,32,18,0.32);
+      transform: translateY(2px);
+    }
+    main {
+      padding: 26px;
+      border: 1px solid rgba(143, 123, 87, 0.42);
+      border-top: 0;
+      border-radius: 0 0 10px 10px;
+      background: linear-gradient(180deg, rgba(255,253,247,0.72), rgba(246,239,226,0.72));
+      box-shadow: 0 26px 46px var(--shadow);
+    }
+    .report {
+      display: none;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(22px, 4vw, 44px);
+      border: 1px solid rgba(156, 135, 96, 0.55);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #fffefb 0%, #fff9ed 100%);
+      box-shadow: inset 0 1px 0 #fff, 0 14px 28px rgba(66, 45, 24, 0.16);
+    }
+    .report.active { display: block; }
+    .report-kicker {
+      margin-bottom: 10px;
+      color: var(--teal);
+      font: 800 12px/1 Arial, Helvetica, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0;
+      color: var(--rust);
+      font-size: clamp(28px, 3.8vw, 44px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .lede {
+      margin: 18px 0 28px;
+      padding: 16px 18px;
+      border-left: 5px solid var(--teal);
+      background: #f3ead9;
+      color: #363026;
+      font-size: 18px;
+    }
+    .report-section {
+      padding-top: 4px;
+      margin-top: 24px;
+    }
+    h3 {
+      margin: 0 0 10px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid #dfd2bc;
+      color: var(--teal);
+      font: 800 17px/1.2 Arial, Helvetica, sans-serif;
+    }
+    p, li { font-size: 17px; }
+    ul { padding-left: 24px; }
+    li { margin: 7px 0; }
+    a { color: #14585c; font-weight: 700; }
+    .sources-section {
+      margin-top: 30px;
+      padding: 18px;
+      border: 1px solid #d9ccb7;
+      border-radius: 8px;
+      background: #f7efe1;
+    }
+    .source-list {
+      margin-bottom: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .source-list li { font-size: 14px; }
+    .source-note {
+      color: #5d564b;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 14px;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .rank-card {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid #d3c4aa;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #fffbf1 0%, #f1e6d2 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 8px 16px rgba(66,45,24,0.12);
+    }
+    .rank-number {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fffdf8;
+      background: linear-gradient(180deg, #b75a39 0%, #7a321f 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), 0 4px 0 #552316;
+      font: 800 18px/1 Arial, Helvetica, sans-serif;
+    }
+    .rank-card h4 {
+      margin: 0 0 6px;
+      color: var(--rust);
+      font: 800 18px/1.2 Arial, Helvetica, sans-serif;
+    }
+    .rank-link {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--rust);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .rank-link:hover,
+    .rank-link:focus-visible {
+      color: var(--teal);
+      outline: none;
+    }
+
+    .rank-card p {
+      margin: 0;
+      font-size: 16px;
+    }
+    .shortlist {
+      margin-top: 22px;
+      padding: 16px 18px;
+      border: 1px solid #b7c8c7;
+      border-radius: 8px;
+      background: #eaf3ef;
+      color: #233c3d;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+    }
+    @media (max-width: 760px) {
+      .shell { width: 100%; padding: 0; }
+      header, main { border-radius: 0; }
+      .tab-deck { position: static; padding: 10px 10px 0; }
+      .tab { flex: 1 1 calc(50% - 8px); min-height: 44px; }
+      main { padding: 14px; }
+      p, li { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <h1>a16z New Media's 2026 Summer Reading List</h1>
+      <p>Research notes for deciding what to read when time is scarce. Each tab renders the full report for one book, including the a16z rationale and cited sources.</p>
+    </header>
+    <nav class="tab-deck" role="tablist" aria-label="Book reports">
+      <button id="tab-order" class="tab active" type="button" data-tab="order" aria-controls="order" aria-selected="true">Reading Order</button>
+      <button id="tab-moby" class="tab" type="button" data-tab="moby" aria-controls="moby" aria-selected="false">Moby Dick</button>
+      <button id="tab-magic" class="tab" type="button" data-tab="magic" aria-controls="magic" aria-selected="false">The Magic Mountain</button>
+      <button id="tab-monte" class="tab" type="button" data-tab="monte" aria-controls="monte" aria-selected="false">The Count of Monte Cristo</button>
+      <button id="tab-expanded" class="tab" type="button" data-tab="expanded" aria-controls="expanded" aria-selected="false">Expanded Cinema</button>
+      <button id="tab-boys" class="tab" type="button" data-tab="boys" aria-controls="boys" aria-selected="false">The Boys in the Boat</button>
+      <button id="tab-irrational" class="tab" type="button" data-tab="irrational" aria-controls="irrational" aria-selected="false">Predictably Irrational</button>
+      <button id="tab-range" class="tab" type="button" data-tab="range" aria-controls="range" aria-selected="false">Range</button>
+      <button id="tab-johnson" class="tab" type="button" data-tab="johnson" aria-controls="johnson" aria-selected="false">Dinner with Joseph Johnson</button>
+      <button id="tab-jobs" class="tab" type="button" data-tab="jobs" aria-controls="jobs" aria-selected="false">Becoming Steve Jobs</button>
+      <button id="tab-bede" class="tab" type="button" data-tab="bede" aria-controls="bede" aria-selected="false">Bede&#x27;s Ecclesiastical History</button>
+    </nav>
+    <main>
+      <article id="order" class="report active" aria-labelledby="tab-order">
+  <div class="report-kicker">Reading Strategy</div>
+  <h2>Best Reading Order for SF AI Builders</h2>
+  <p class="lede">If time is premium and the reader is a Silicon Valley / San Francisco AI operator, founder, investor, or product person, prioritize books that sharpen thinking about new media, generalist cognition, scenes, founder development, and product behavior.</p>
+  <section class="report-section">
+    <h3>Recommended order</h3>
+    <ol class="ranking-list">
+      <li class="rank-card"><span class="rank-number">1</span><div><h4><button class="rank-link" type="button" data-jump="expanded">Expanded Cinema</button></h4><p>Most directly useful for AI, media, networks, and interface culture. It gives a way to think about new technology changing perception, culture, and collective experience.</p></div></li>
+      <li class="rank-card"><span class="rank-number">2</span><div><h4><button class="rank-link" type="button" data-jump="range">Range</button></h4><p>Very relevant to AI careers and founder/operator life: breadth, analogical thinking, late specialization, and navigating wicked environments where rules keep changing.</p></div></li>
+      <li class="rank-card"><span class="rank-number">3</span><div><h4><button class="rank-link" type="button" data-jump="johnson">Dinner with Joseph Johnson</button></h4><p>Best book on scenes, salons, publishing networks, and how intellectual ecosystems form. Highly relevant for people who care about talent density, rooms, and movements.</p></div></li>
+      <li class="rank-card"><span class="rank-number">4</span><div><h4><button class="rank-link" type="button" data-jump="jobs">Becoming Steve Jobs</button></h4><p>Founder psychology, adversity, taste, and operational maturity. More immediately useful than most biographies if you are building, investing, or managing through hard years.</p></div></li>
+      <li class="rank-card"><span class="rank-number">5</span><div><h4><button class="rank-link" type="button" data-jump="irrational">Predictably Irrational</button></h4><p>Useful for product, pricing, behavior, and UX instincts. Read with skepticism because of research-reliability issues, but the product lens is still practical.</p></div></li>
+      <li class="rank-card"><span class="rank-number">6</span><div><h4><button class="rank-link" type="button" data-jump="moby">Moby Dick</button></h4><p>Surprisingly relevant as a leadership, obsession, craft, and command book. Not efficient, but high-ceiling if you want a deep study of mission-driven mania.</p></div></li>
+      <li class="rank-card"><span class="rank-number">7</span><div><h4><button class="rank-link" type="button" data-jump="boys">The Boys in the Boat</button></h4><p>Strong team-coordination book. Easier and inspiring, but less intellectually distinctive for AI people than the books above.</p></div></li>
+      <li class="rank-card"><span class="rank-number">8</span><div><h4><button class="rank-link" type="button" data-jump="magic">The Magic Mountain</button></h4><p>Great for deep civilizational and intellectual context, but slow and expensive in attention. High value, low efficiency.</p></div></li>
+      <li class="rank-card"><span class="rank-number">9</span><div><h4><button class="rank-link" type="button" data-jump="monte">The Count of Monte Cristo</button></h4><p>Extremely readable and rewarding, but less directly useful for AI/SF decision-making unless you want a moral epic about patience, revenge, and transformation.</p></div></li>
+      <li class="rank-card"><span class="rank-number">10</span><div><h4><button class="rank-link" type="button" data-jump="bede">Bede's Ecclesiastical History</button></h4><p>Fascinating for identity formation and early institutional history, but probably lowest ROI for this audience unless medieval religion, civilization, or national origins are already live interests.</p></div></li>
+    </ol>
+    <div class="shortlist"><strong>Brutal 80/20 shortlist:</strong> Expanded Cinema, Range, Dinner with Joseph Johnson, and Becoming Steve Jobs.</div>
+  </section>
+</article>
+      <article id="moby" class="report" aria-labelledby="tab-moby">
+  <div class="report-kicker">Research Report</div>
+  <h2>Moby Dick, by Herman Melville</h2>
+  <p class="lede">Read this if you want a major American classic that is stranger, funnier, and more operationally detailed than its reputation suggests. Skip it if you need a tight plot: the revenge story is only the spine. Much of the book is Ishmael&#x27;s digressive education in whaling, shipboard hierarchy, metaphysics, racial and religious difference, labor, command, and obsession.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a major American classic that is stranger, funnier, and more operationally detailed than its reputation suggests. Skip it if you need a tight plot: the revenge story is only the spine. Much of the book is Ishmael&#x27;s digressive education in whaling, shipboard hierarchy, metaphysics, racial and religious difference, labor, command, and obsession.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>The plot is simple: Ishmael joins the whaling ship Pequod, befriends the harpooner Queequeg, and is drawn into Captain Ahab&#x27;s monomaniacal pursuit of the white sperm whale that maimed him. The experience of reading it is not simple. Melville keeps interrupting the chase with chapters on cetology, ropes, whale oil, ships, sermons, stage-like monologues, and working practices aboard a whaler. That encyclopedic structure is part of the point: Ahab wants one object to explain the world; Ishmael keeps showing that the world is too large, material, funny, and contradictory to be reduced that way.</p>
+<p>Project Gutenberg classifies it under whaling, sea stories, psychological fiction, ship captains, adventure, and whales. That mix is accurate. It is a sea adventure, a workplace novel, a philosophical comedy, and a tragedy of command failure. It also draws on Melville&#x27;s time at sea and on contemporary whaling lore, including the real albino whale Mocha Dick and the sinking of the Essex.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Alex Danco&#x27;s a16z recommendation frames it as the Great American Novel and, more interestingly, as a &quot;startup&quot; book. His reasoning is that the pleasure lies in obsessive, tactile knowledge: how ropes are coiled, how crews work, how a dangerous industrial system operates, and how expertise accumulates in concrete detail. That is a plausible a16z angle. The book is not about startups literally; it is about the intensity and danger of a mission-driven organization under a charismatic but deranged leader.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A dense study of obsession: Ahab turns injury into totalizing strategy.</li>
+<li>A study of teams: the Pequod is multinational, multi-faith, hierarchical, and highly skilled.</li>
+<li>A warning about leadership: Ahab is compelling because he gives the crew meaning, but he converts shared enterprise into private revenge.</li>
+<li>A pleasure in detail: the book rewards readers who like systems, tools, protocols, and craft knowledge.</li>
+<li>A taste of American literary ambition: Melville wants scripture, Shakespeare, science, comedy, labor history, and adventure in the same book.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>The middle can feel like a manual. If time is tight, do not read it only for plot. Read it because you want the digressions. The a16z case is strongest for readers who like operational texture and leadership psychology.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Alex Danco section.</li>
+<li>Project Gutenberg: <a href="https://www.gutenberg.org/ebooks/2701" target="_blank" rel="noopener noreferrer">Moby Dick; Or, The Whale</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Moby-Dick" target="_blank" rel="noopener noreferrer">Moby-Dick</a></li>
+<li>Vanity Fair: <a href="https://www.vanityfair.com/culture/2011/11/moby-dick-201111" target="_blank" rel="noopener noreferrer">The Road to Melville</a></li>
+<li>The Guardian: <a href="https://www.theguardian.com/books/2024/dec/08/moby-dick-reading-tradition" target="_blank" rel="noopener noreferrer">Moby-Dick reading marathons</a></li>
+</ul>
+</section>
+</article>
+      <article id="magic" class="report" aria-labelledby="tab-magic">
+  <div class="report-kicker">Research Report</div>
+  <h2>The Magic Mountain, by Thomas Mann</h2>
+  <p class="lede">Read this if you want a slow, idea-heavy modernist novel that turns a tuberculosis sanatorium into a model of Europe before World War I. Skip it if you need pace, plot payoff, or emotional directness. It is long, ironic, philosophical, and intentionally suspended in time.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a slow, idea-heavy modernist novel that turns a tuberculosis sanatorium into a model of Europe before World War I. Skip it if you need pace, plot payoff, or emotional directness. It is long, ironic, philosophical, and intentionally suspended in time.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Hans Castorp, a young German engineer, visits his cousin Joachim at the Berghof sanatorium in Davos for what is supposed to be a short stay. He remains there for seven years. The sanatorium becomes a sealed intellectual climate where illness, erotic fascination, idleness, political argument, and mortality reshape him.</p>
+<p>The book&#x27;s plot is less important than its atmosphere and debates. Castorp listens to arguments between humanist Settembrini and radical Jesuit-communist Naphta; falls under the spell of Clavdia Chauchat; observes patients who turn sickness into identity; and experiences time as elastic. The novel begins as a comic follow-up to Death in Venice, but World War I changed Mann&#x27;s purpose. It became a large-scale meditation on Europe, bourgeois civilization, illness, death, democratic humanism, and the forces that would drag the continent into catastrophe.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Alex Danco recommends it as a guide to sorting out the Western &quot;canon of ideas.&quot; That is fair. The book dramatizes European intellectual lineages rather than explaining them in textbook form. The characters are not only people; they are carriers of ideas about progress, reason, death, eroticism, religion, nihilism, nationalism, and politics. Danco also says it can change how you view current American electoral politics. The bridge is indirect but credible: Mann shows how intelligent people can become trapped in ideological theater while the real world moves toward violence.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A model for thinking about how cultures get sick before they know they are sick.</li>
+<li>A powerful treatment of time: routine makes years vanish while small moments expand.</li>
+<li>A literary map of prewar European ideas.</li>
+<li>A sharp contrast between health as productivity and health as earned wisdom.</li>
+<li>A reminder that politics often enters life first as talk, mood, and social pressure.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>This is not an efficient book. The a16z value is not &quot;actionable insight&quot; but intellectual orientation. If you want the 80/20 version, read a good introduction plus selected chapters around Settembrini, Naphta, Clavdia, Joachim, and the ending. If you want the real effect, the full slow immersion matters.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Alex Danco section.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/The_Magic_Mountain" target="_blank" rel="noopener noreferrer">The Magic Mountain</a></li>
+<li>The Atlantic: <a href="https://www.theatlantic.com/magazine/archive/2024/12/thomas-mann-magic-mountain-cultural-political-relevance/680400/" target="_blank" rel="noopener noreferrer">The Magic Mountain Saved My Life</a></li>
+<li>Financial Times: <a href="https://www.ft.com/content/16bbd874-0931-42ac-83e4-8598fdc22603" target="_blank" rel="noopener noreferrer">Why The Magic Mountain is still relevant a century later</a></li>
+</ul>
+</section>
+</article>
+      <article id="monte" class="report" aria-labelledby="tab-monte">
+  <div class="report-kicker">Research Report</div>
+  <h2>The Count of Monte Cristo, by Alexandre Dumas</h2>
+  <p class="lede">Read this if you want a long but unusually propulsive revenge epic with moral weight. Skip it if 1,000-plus pages is unrealistic for you right now, unless you are willing to read it in installments as it was originally serialized.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a long but unusually propulsive revenge epic with moral weight. Skip it if 1,000-plus pages is unrealistic for you right now, unless you are willing to read it in installments as it was originally serialized.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Edmond Dantes is a young sailor on the edge of promotion and marriage when three rivals and a self-protecting prosecutor help frame him as a Bonapartist traitor. He is imprisoned in the Chateau d&#x27;If, where Abbe Faria educates him and tells him of a treasure on Monte Cristo. After escape, Dantes becomes fabulously wealthy and re-enters society under multiple identities, chiefly the Count of Monte Cristo, to expose and punish the men who destroyed him.</p>
+<p>The novel is adventure fiction, historical fiction, prison escape, social satire, and theological revenge drama. It is set across France, Italy, and the Mediterranean during the Bourbon Restoration and July Monarchy. Dumas uses hidden identities, poisonings, bandits, banking schemes, political scandal, family secrets, and romantic reversals. But the central question is not &quot;will revenge succeed?&quot; It is whether Dantes can remain human once he starts acting like Providence.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Cola Gahm recommends it because it is far more suspenseful and fun than its page count suggests, and because Dantes&#x27;s suffering and eventual transformation changed her view of life. Her recommendation centers on providence, evil turned toward good, and the final counsel to wait and hope. That matches the book. Dantes&#x27;s triumph is not merely that he defeats enemies; it is that he eventually sees the moral danger of becoming only an instrument of punishment.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A masterclass in serialization: cliffhangers, reversals, delayed revelations, and interlocking subplots.</li>
+<li>A deep treatment of revenge as both intoxicating and spiritually corrosive.</li>
+<li>A historical backdrop where regime change creates opportunities for betrayal and reinvention.</li>
+<li>One of fiction&#x27;s most satisfying prison-education arcs.</li>
+<li>A strong test of whether you like big 19th-century narrative engines.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>Use an unabridged modern translation if possible. The Robin Buss Penguin translation is often recommended because it restores material muted in older Victorian versions and reads cleanly for modern readers. If you only know the films, expect the novel to be more morally complicated and more sprawling.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Cola Gahm section.</li>
+<li>Project Gutenberg: <a href="https://www.gutenberg.org/ebooks/1184" target="_blank" rel="noopener noreferrer">The Count of Monte Cristo</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/The_Count_of_Monte_Cristo" target="_blank" rel="noopener noreferrer">The Count of Monte Cristo</a></li>
+<li>The Times: <a href="https://www.thetimes.co.uk/article/count-monte-cristo-alexandre-dumas-review-xnp5gzf6p" target="_blank" rel="noopener noreferrer">The Count of Monte Cristo by Alexandre Dumas - the ultimate revenge novel</a></li>
+</ul>
+</section>
+</article>
+      <article id="expanded" class="report" aria-labelledby="tab-expanded">
+  <div class="report-kicker">Research Report</div>
+  <h2>Expanded Cinema, by Gene Youngblood</h2>
+  <p class="lede">Read this if you want a prophetic, sometimes wild media-theory book about how new image technologies change consciousness, art, and social organization. Skip it if you want a clean, contemporary AI book. The value is historical and conceptual, not practical instruction.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a prophetic, sometimes wild media-theory book about how new image technologies change consciousness, art, and social organization. Skip it if you want a clean, contemporary AI book. The value is historical and conceptual, not practical instruction.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Published in 1970, Expanded Cinema argues that cinema was breaking out of theatrical film into video, computers, multi-media environments, networks, light shows, experimental film, cybernetics, and what Youngblood saw as new forms of collective consciousness. He treats media not merely as content delivery but as an environment that reorganizes perception. The book discusses synaesthetic cinema, experimental filmmakers, video as an art form, computer films, holography, and &quot;intermedia&quot; networks.</p>
+<p>Some sections are period-specific. Youngblood spends long stretches describing experimental films and technologies of the late 1960s. But the broader argument is still recognizable: when the medium changes, the human sensorium and social field change with it. That is why the book keeps resurfacing in discussions of digital art, network culture, VR, crypto, and AI.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Elena Burger recommends it because it helps her think about technologies that create new forms of collective experience. She explicitly connects her earlier reading through crypto and trading apps to her current reading through AI. That is the strongest reason to read it now. The book is not about AI, but it offers a vocabulary for thinking about what happens when images, networks, computers, and environments become part of cognition.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A historically important early treatment of video as art.</li>
+<li>A theory of media as environment, not just channel.</li>
+<li>A bridge from experimental film to computer art and networked culture.</li>
+<li>A useful provocation: new media create new people, not merely new content formats.</li>
+<li>Context for why artists often understand technological shifts before institutions do.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>Expect 1970s futurist language, speculative leaps, and detailed references to experimental films you may not know. The a16z recommendation is strongest if you work on AI, media, consumer tech, networks, creator tools, or interface culture. It is weaker if you mainly want polished argumentation or contemporary evidence.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Elena Burger section.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Expanded_Cinema" target="_blank" rel="noopener noreferrer">Expanded Cinema</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Gene_Youngblood" target="_blank" rel="noopener noreferrer">Gene Youngblood</a></li>
+<li>Fordham University Press: <a href="https://www.fordhampress.com/9780823287411/expanded-cinema/" target="_blank" rel="noopener noreferrer">Expanded Cinema: Fiftieth Anniversary Edition</a></li>
+<li>WorldCat: <a href="https://search.worldcat.org/title/1110661361" target="_blank" rel="noopener noreferrer">Expanded Cinema, fiftieth anniversary edition</a></li>
+</ul>
+</section>
+</article>
+      <article id="boys" class="report" aria-labelledby="tab-boys">
+  <div class="report-kicker">Research Report</div>
+  <h2>The Boys in the Boat, by Daniel James Brown</h2>
+  <p class="lede">Read this if you want accessible narrative nonfiction about teamwork, poverty, amateur sport, and the 1936 Berlin Olympics. Skip it if you dislike inspirational sports history or already know you prefer more analytical history.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want accessible narrative nonfiction about teamwork, poverty, amateur sport, and the 1936 Berlin Olympics. Skip it if you dislike inspirational sports history or already know you prefer more analytical history.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>The book tells the true story of the University of Washington men&#x27;s eight-oar crew that won gold at the 1936 Olympics in Berlin. Brown builds the story around Joe Rantz, a working-class student who had been abandoned by his family and had to earn his way through school. The larger cast includes his teammates, coach Al Ulbrickson, and boatbuilder George Pocock, whose reflections on rowing give the book much of its emotional vocabulary.</p>
+<p>The rowing story is intercut with Depression-era hardship, University of Washington rivalry with elite eastern schools, the craft of shell-building, the physics and psychology of crew synchronization, and Nazi Germany&#x27;s staging of the 1936 Games. It is a classic underdog structure: lower-income western students learn to move as one body and defeat better-funded rivals before facing Italy and Germany in Berlin.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Jason Saltzman recommends it as an Olympic story and as a time capsule of the amateur era. His deeper reason is the idea of &quot;swing&quot;: the rare condition in which individual effort disappears into perfectly coordinated group motion. That is the business and team-building hook. The book is not just &quot;sports are inspiring&quot;; it is about how a group becomes more than the sum of strong individuals.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A concrete language for teamwork, rhythm, trust, and coordination.</li>
+<li>A view of Depression-era grit without turning it into abstraction.</li>
+<li>A satisfying narrative arc that is easier to read than most books on this list.</li>
+<li>An account of amateur sport before sponsorship, media machinery, and professionalized youth pipelines.</li>
+<li>A useful contrast between individual biography and collective achievement.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>The book is emotionally direct and conventionally told. That is a feature if you want a page-turner; a limitation if you want a more critical or revisionist account of the 1936 Olympics. The 2023 film foregrounds Joe Rantz, but Brown has said the original book was meant to honor the whole boat.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Jason Saltzman section.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/The_Boys_in_the_Boat" target="_blank" rel="noopener noreferrer">The Boys in the Boat</a></li>
+<li>TIME: <a href="https://time.com/6548861/the-the-boys-in-the-boat-true-story/" target="_blank" rel="noopener noreferrer">The Story Behind The Boys in the Boat</a></li>
+<li>Daniel James Brown: <a href="https://www.danieljamesbrown.com/" target="_blank" rel="noopener noreferrer">Official author site</a></li>
+<li>PBS: <a href="https://www.pbs.org/wgbh/americanexperience/films/boys36/" target="_blank" rel="noopener noreferrer">The Boys of &#x27;36</a></li>
+</ul>
+</section>
+</article>
+      <article id="irrational" class="report" aria-labelledby="tab-irrational">
+  <div class="report-kicker">Research Report</div>
+  <h2>Predictably Irrational, by Dan Ariely</h2>
+  <p class="lede">Read this if you want a very readable tour of behavioral economics and decision traps: anchoring, decoys, &quot;free,&quot; social versus market norms, procrastination, ownership, expectations, placebo effects, and dishonesty. Read with caution if you care about research reliability; some Ariely-linked work and parts of the broader behavioral-science ecosystem have faced replication and data-integrity problems.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a very readable tour of behavioral economics and decision traps: anchoring, decoys, &quot;free,&quot; social versus market norms, procrastination, ownership, expectations, placebo effects, and dishonesty. Read with caution if you care about research reliability; some Ariely-linked work and parts of the broader behavioral-science ecosystem have faced replication and data-integrity problems.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Ariely argues that human irrationality is systematic. We do not merely make random mistakes; we make patterned mistakes that can be predicted, exploited, and sometimes corrected. The book uses experiments and anecdotes to challenge the rational-actor model. Examples include how a decoy option shifts choices, how arbitrary anchors influence prices, why &quot;free&quot; feels disproportionately powerful, why small payments can crowd out social motivation, why ownership changes valuation, and why expectations shape experience.</p>
+<p>The book&#x27;s style is practical and memorable. It is not a technical economics text. Its influence came from giving everyday names and examples to biases that readers could immediately recognize in pricing pages, negotiations, consumer purchases, workplace incentives, and self-control failures.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Jason Saltzman recommends it because once you see these patterns, you notice them in your own decisions. His a16z rationale emphasizes product, pricing, and personal choice: middle-option bias, &quot;free&quot; as a conversion force, anchoring in negotiation, and the way presentation changes perceived value. That is the right use case: treat it as a lens for noticing behavior, not as a definitive scientific canon.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A strong vocabulary for product and pricing psychology.</li>
+<li>A practical warning that users do not evaluate offers in isolation.</li>
+<li>Useful intuition about motivation: markets and social norms can conflict.</li>
+<li>A reminder that self-control systems need design, not just willpower.</li>
+<li>A fast entry point into behavioral economics before reading Kahneman, Thaler, or more technical work.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>Do not treat every experiment as settled fact. A 2012 dishonesty paper coauthored by Ariely was later retracted after data problems were identified, and Data Colada reported evidence of fabricated data in that field experiment. That does not automatically invalidate every idea in Predictably Irrational, but it lowers confidence in using the book as scientific authority. It is best read as a memorable idea generator whose claims deserve follow-up.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Jason Saltzman section.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Predictably_Irrational" target="_blank" rel="noopener noreferrer">Predictably Irrational</a></li>
+<li>The New Yorker: <a href="https://www.newyorker.com/magazine/2008/02/25/what-was-i-thinking-reason-irrationality" target="_blank" rel="noopener noreferrer">What Was I Thinking?</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Data_Colada" target="_blank" rel="noopener noreferrer">Data Colada</a></li>
+<li>PNAS: <a href="https://www.pnas.org/doi/10.1073/pnas.2115397118" target="_blank" rel="noopener noreferrer">Retraction for Shu et al., Signing at the beginning makes ethics salient and decreases dishonest self-reports in comparison to signing at the end</a></li>
+</ul>
+</section>
+</article>
+      <article id="range" class="report" aria-labelledby="tab-range">
+  <div class="report-kicker">Research Report</div>
+  <h2>Range: Why Generalists Triumph in a Specialized World, by David Epstein</h2>
+  <p class="lede">Read this if you feel pressure to specialize too early or want evidence-backed arguments for breadth, sampling, career pivots, analogical thinking, and late starts. Skip it if you already accept the thesis and mainly need domain-specific execution advice.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you feel pressure to specialize too early or want evidence-backed arguments for breadth, sampling, career pivots, analogical thinking, and late starts. Skip it if you already accept the thesis and mainly need domain-specific execution advice.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>David Epstein argues against the simplistic version of the 10,000-hour rule. He does not say specialization is useless. He argues that early, narrow specialization works best in &quot;kind&quot; learning environments with clear rules and rapid feedback, such as chess or golf. In &quot;wicked&quot; environments with ambiguous feedback, changing rules, and novel problems, broad experience can outperform early narrowness.</p>
+<p>The book ranges across athletes, musicians, inventors, scientists, forecasters, and career-switchers. Its key ideas include sampling periods, match quality, analogical problem solving, desirable difficulty, and the creative value of crossing domains. Epstein&#x27;s author page summarizes the claim directly: generalists often find their path late, juggle many interests, and make connections specialists miss.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Jason Saltzman recommends it as the case for breadth and late specialization. His a16z framing translates the thesis into AI language: range makes a person&#x27;s &quot;context window&quot; larger. That is a useful metaphor. In messy environments, your ability to retrieve analogies from unrelated experience may matter more than pure depth in one lane.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A defense of career zigzags as information gathering rather than failure.</li>
+<li>A distinction between kind and wicked learning environments.</li>
+<li>A way to think about hiring and talent beyond narrow credentials.</li>
+<li>A reminder that quitting can be rational when it improves match quality.</li>
+<li>Better language for interdisciplinary work and creative recombination.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>The book is persuasive, but readers sometimes overcorrect. Range is not an excuse to avoid depth. Epstein&#x27;s stronger claim is sequencing: sample broadly enough to find fit and build transfer, then go deep where it matters. If you are already deep in a field, the practical move may be deliberate adjacent exploration rather than abandoning specialization.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Jason Saltzman section.</li>
+<li>David Epstein: <a href="https://davidepstein.com/range/" target="_blank" rel="noopener noreferrer">Range official book page</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Range:_Why_Generalists_Triumph_in_a_Specialized_World" target="_blank" rel="noopener noreferrer">Range: Why Generalists Triumph in a Specialized World</a></li>
+<li>Penguin Random House: <a href="https://www.penguinrandomhouse.com/books/550188/range-by-david-epstein/" target="_blank" rel="noopener noreferrer">Range</a></li>
+</ul>
+</section>
+</article>
+      <article id="johnson" class="report" aria-labelledby="tab-johnson">
+  <div class="report-kicker">Research Report</div>
+  <h2>Dinner with Joseph Johnson, by Daisy Hay</h2>
+  <p class="lede">Read this if you are interested in intellectual scenes, publishing, salons, and how networks of writers and reformers shape an age. Skip it if you want a single-hero biography or a fast narrative; the book is ensemble history and starts with dense context.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you are interested in intellectual scenes, publishing, salons, and how networks of writers and reformers shape an age. Skip it if you want a single-hero biography or a fast narrative; the book is ensemble history and starts with dense context.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Daisy Hay tells the story of Joseph Johnson, the 18th-century London publisher whose shop and dinner table gathered writers, artists, scientists, theologians, reformers, and radicals. His circle included Mary Wollstonecraft, William Godwin, William Blake, Joseph Priestley, Henry Fuseli, Anna Laetitia Barbauld, and others. The subject is not merely Johnson as an individual, but the social infrastructure around books, argument, friendship, patronage, dissent, and risk.</p>
+<p>Johnson&#x27;s world sits in the revolutionary 1790s: the American and French Revolutions, debates over rights, slavery, religion, education, women, science, and political reform. A publisher in that environment was not a neutral distributor. Johnson curated authors, absorbed risk, hosted relationships, and helped turn conversation into print.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Jolie Gan recommends it as a case for &quot;scenius&quot;: the idea that genius often comes from a scene rather than an isolated individual. Her a16z rationale is directly relevant to San Francisco, startups, fellowships, founder dinners, and curated rooms. The point is that important ideas need social containers: recurring dinners, trusted publishers, patrons, hosts, editors, and places where strong personalities can collide.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A historical model of intellectual network-building.</li>
+<li>A reminder that publishing is infrastructure for movements, not just content distribution.</li>
+<li>A cast of major figures before they are frozen into textbook names.</li>
+<li>A useful lens on how private rooms can become public change.</li>
+<li>A counterweight to lone-genius biography.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>This is likely most valuable if you care about scenes, institutions, media, publishing, or intellectual history. If you want the Mary Wollstonecraft or William Blake story only, a dedicated biography may be more efficient. The a16z case is strongest for people building communities or ecosystems.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Jolie Gan section.</li>
+<li>Princeton University Press: <a href="https://press.princeton.edu/books/hardcover/9780691217671/dinner-with-joseph-johnson" target="_blank" rel="noopener noreferrer">Dinner with Joseph Johnson</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Daisy_Hay" target="_blank" rel="noopener noreferrer">Daisy Hay</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Joseph_Johnson_(publisher" target="_blank" rel="noopener noreferrer">Joseph Johnson (publisher)</a>)</li>
+<li>The Guardian: <a href="https://www.theguardian.com/books/2022/sep/15/dinner-with-joseph-johnson-by-daisy-hay-review" target="_blank" rel="noopener noreferrer">Dinner with Joseph Johnson review</a></li>
+</ul>
+</section>
+</article>
+      <article id="jobs" class="report" aria-labelledby="tab-jobs">
+  <div class="report-kicker">Research Report</div>
+  <h2>Becoming Steve Jobs, by Brent Schlender and Rick Tetzeli</h2>
+  <p class="lede">Read this if you want a founder biography focused on growth through failure, especially Jobs&#x27;s years between Apple exile and Apple return. Skip it if you want a hostile biography, a purely technical Apple history, or a full substitute for Walter Isaacson&#x27;s broader authorized biography.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a founder biography focused on growth through failure, especially Jobs&#x27;s years between Apple exile and Apple return. Skip it if you want a hostile biography, a purely technical Apple history, or a full substitute for Walter Isaacson&#x27;s broader authorized biography.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Becoming Steve Jobs argues that Jobs did not emerge fully formed as a visionary leader. Its subtitle, &quot;The Evolution of a Reckless Upstart into a Visionary Leader,&quot; is the thesis. The book spends major attention on the &quot;wilderness years&quot; after Jobs was pushed out of Apple: NeXT struggled, Pixar nearly failed before becoming transformative, and Jobs had to learn discipline, partnership, patience, and operational focus.</p>
+<p>The book was written by longtime technology journalist Brent Schlender and Fast Company editor Rick Tetzeli. It is unauthorized, but Apple and several people close to Jobs cooperated more than they had with some earlier portrayals. Contemporary coverage described it as a corrective to the harsher impression left by Walter Isaacson&#x27;s Steve Jobs, while still acknowledging Jobs&#x27;s volatility and flaws.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Michael McGuiness recommends it as a founder must-read because it centers adversity rather than innate genius. That is the key a16z angle. The story is not &quot;be abrasive and brilliant.&quot; It is &quot;failure can refine judgment if the founder learns from it.&quot; For startup readers, the most relevant material is Jobs spending years with companies that looked broken before the lessons compounded.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A founder-growth narrative rather than a founder-myth narrative.</li>
+<li>A close look at NeXT and Pixar as training grounds.</li>
+<li>A useful counterpoint to simplistic &quot;genius founder&quot; explanations.</li>
+<li>A case study in product taste becoming stronger when paired with operational maturity.</li>
+<li>A more sympathetic but still not frictionless portrait of Jobs.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>Because people close to Jobs supported the book, some critics saw it as overly favorable. Read it as one interpretation in the Jobs biography ecosystem, not the final word. Its strongest value is the arc: how a difficult, talented person becomes a more effective builder through painful experience.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Michael McGuiness section.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Becoming_Steve_Jobs" target="_blank" rel="noopener noreferrer">Becoming Steve Jobs</a></li>
+<li>Wired: <a href="https://www.wired.com/2015/03/the-war-over-who-steve-jobs-was" target="_blank" rel="noopener noreferrer">The War Over Who Steve Jobs Was</a></li>
+<li>TIME: <a href="https://time.com/3757765/steve-jobs-biography/" target="_blank" rel="noopener noreferrer">Why It Matters Who Steve Jobs Really Was</a></li>
+<li>C-SPAN: <a href="https://www.c-span.org/video/?325355-1/brent-schlender-becoming-steve-jobs" target="_blank" rel="noopener noreferrer">Presentation by Schlender and Tetzeli on Becoming Steve Jobs</a></li>
+</ul>
+</section>
+</article>
+      <article id="bede" class="report" aria-labelledby="tab-bede">
+  <div class="report-kicker">Research Report</div>
+  <h2>Historia Ecclesiastica Gentis Anglorum, by the Venerable Bede</h2>
+  <p class="lede">Read this if you want a primary-source window into early medieval England, Christianization, miracles, kingship, memory, and the making of an English people. Skip it if you want modern narrative history; Bede is readable in translation, but he is still an 8th-century monk with religious and regional commitments.</p>
+  <section class="report-section">
+<h3>Bottom line</h3>
+<p>Read this if you want a primary-source window into early medieval England, Christianization, miracles, kingship, memory, and the making of an English people. Skip it if you want modern narrative history; Bede is readable in translation, but he is still an 8th-century monk with religious and regional commitments.</p>
+</section>
+<section class="report-section">
+<h3>What the book is about</h3>
+<p>Bede completed the Ecclesiastical History of the English People around 731. It is a five-book Latin history of Britain and the English church from Julius Caesar&#x27;s invasion through Bede&#x27;s own time. Its main through-line is the spread of Christianity among the Anglo-Saxons, but it also covers kings, battles, monastic foundations, saints, miracles, plague, conversion, political rivalry, and disputes such as the dating of Easter.</p>
+<p>The work matters because it is one of the central sources for early Anglo-Saxon history. Bede drew on earlier writers, documents, letters, informants, oral testimony, and monastic networks. Modern readers should also recognize its biases: Bede writes as a Northumbrian monk committed to Roman ecclesiastical order, and he evaluates events through providence, orthodoxy, and moral instruction.</p>
+</section>
+<section class="report-section">
+<h3>Why a16z recommends it</h3>
+<p>Moses Sternstein recommends Bede as a curious, colorful, rigorous observer of a violent and formative period. His a16z rationale compares Bede to an Anglo-Saxon Tocqueville: someone observing the formation of a people before that people fully exists as a unified political nation. That is a smart frame. Bede is not modern social science, but he is watching identity, religion, legitimacy, and political order being assembled.</p>
+</section>
+<section class="report-section">
+<h3>What you would get from reading it</h3>
+<ul>
+<li>A primary-source account of early English Christianization.</li>
+<li>A window into how medieval historians blended evidence, miracle, moral judgment, and politics.</li>
+<li>Famous episodes such as Augustine&#x27;s mission, the Synod of Whitby, Cuthbert, and Caedmon.</li>
+<li>A sense of England before England: multiple kingdoms, rival peoples, and competing religious authorities.</li>
+<li>A useful reminder that national identity is narrated into being.</li>
+</ul>
+</section>
+<section class="report-section">
+<h3>Caveats</h3>
+<p>Do not read it as neutral modern history. Read it as both evidence and argument. The best use is selective: consult introductions, then read key episodes. If you read straight through, expect repetitive ecclesiastical detail and a worldview where miracle and causality are not separated the way a modern secular historian would separate them.</p>
+</section>
+<section class="report-section sources-section">
+<h3>Sources</h3>
+<ul class="source-list">
+<li>a16z New Media article capture, Moses Sternstein section.</li>
+<li>Project Gutenberg: <a href="https://www.gutenberg.org/ebooks/38326" target="_blank" rel="noopener noreferrer">Bede&#x27;s Ecclesiastical History of England</a></li>
+<li>Christian Classics Ethereal Library: <a href="https://www.ccel.org/ccel/bede/history.html" target="_blank" rel="noopener noreferrer">Bede&#x27;s Ecclesiastical History of England</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Ecclesiastical_History_of_the_English_People" target="_blank" rel="noopener noreferrer">Ecclesiastical History of the English People</a></li>
+<li>AP News: <a href="https://apnews.com/article/106769c014901cf06d8a56839d56ac90" target="_blank" rel="noopener noreferrer">Researchers stunned by a forgotten medieval book in Rome hiding the oldest English poem</a></li>
+</ul>
+</section>
+</article>
+    </main>
+  </div>
+  <script>
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const reports = Array.from(document.querySelectorAll('.report'));
+    function activate(id) {
+      tabs.forEach((tab) => {
+        const selected = tab.dataset.tab === id;
+        tab.classList.toggle('active', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+      reports.forEach((report) => report.classList.toggle('active', report.id === id));
+    }
+    tabs.forEach((tab) => tab.addEventListener('click', () => activate(tab.dataset.tab)));
+    document.querySelectorAll('.rank-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        activate(link.dataset.jump);
+        document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
